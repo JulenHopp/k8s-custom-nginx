@@ -1,0 +1,12 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 3
+  tunnel:
+    image: cloudflare/cloudflared
+    command: tunnel --url http://web:80 --no-tls-verify
+    depends_on:
+      - web
